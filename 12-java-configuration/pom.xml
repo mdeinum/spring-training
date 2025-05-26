@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>biz.deinum</groupId>
+		<artifactId>core-spring</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<packaging>jar</packaging>
+	<artifactId>12-java-configuration</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>biz.deinum</groupId>
+			<artifactId>00-moneytransfer-shared</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.github.h-thurow</groupId>
+			<artifactId>simple-jndi</artifactId>
+			<version>0.25.0</version>
+		</dependency>
+	</dependencies>
+
+
+</project>
