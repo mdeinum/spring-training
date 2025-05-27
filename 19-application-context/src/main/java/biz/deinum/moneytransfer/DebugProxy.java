@@ -32,7 +32,7 @@ public class DebugProxy implements InvocationHandler {
     return result;
   }
 
-  public static <T> T wrap(Object obj, T type) {
+  public static <T> T wrap(Object obj, Class<T> type) {
     return (T) Proxy.newProxyInstance(obj.getClass().getClassLoader(),
         obj.getClass().getInterfaces(), new DebugProxy(obj));
   }
