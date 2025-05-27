@@ -30,7 +30,7 @@
     <modules>
         <module>00-moneytransfer-shared</module>
         <module>12-java-configuration</module>
-        <module>20-application-context</module>
+        <module>19-application-context</module>
     </modules>
 
     <dependencyManagement>

@@ -8,7 +8,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<packaging>jar</packaging>
-	<artifactId>20-application-context</artifactId>
+	<artifactId>19-application-context</artifactId>
 
 	<dependencies>
 		<dependency>

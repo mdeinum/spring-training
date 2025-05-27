@@ -18,12 +18,10 @@ public class MoneyTransferSpring {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-
-		try (var ctx = new AnnotationConfigApplicationContext(MoneyTransferConfig.class)) {
-			transfer(ctx);
-			ApplicationContextLogger.log(ctx);
-		}
-
+		var ctx = new AnnotationConfigApplicationContext(MoneyTransferConfig.class);
+		transfer(ctx);
+		ApplicationContextLogger.log(ctx);
+		ctx.close();
 	}
 
 	private static void transfer(ApplicationContext ctx) {
