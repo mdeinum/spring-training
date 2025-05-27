@@ -12,14 +12,13 @@ public class DebugProxy implements InvocationHandler {
   private static final Logger LOG = LoggerFactory.getLogger(DebugProxy.class);
   private final Object target;
 
-  public DebugProxy(Object target) {
+  private DebugProxy(Object target) {
     this.target = target;
   }
 
   public static Object wrap(Object obj) {
     return Proxy.newProxyInstance(obj.getClass().getClassLoader(),
         obj.getClass().getInterfaces(), new DebugProxy(obj));
-
   }
 
   @Override
