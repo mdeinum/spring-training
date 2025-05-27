@@ -16,11 +16,6 @@ public class DebugProxy implements InvocationHandler {
     this.target = target;
   }
 
-  public static Object wrap(Object obj) {
-    return Proxy.newProxyInstance(obj.getClass().getClassLoader(),
-        obj.getClass().getInterfaces(), new DebugProxy(obj));
-  }
-
   @Override
   public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
     Object result;
@@ -34,5 +29,11 @@ public class DebugProxy implements InvocationHandler {
     } finally {
       LOG.info("after method {}", method.getName());
     }
-    return result;  }
+    return result;
+  }
+
+  public static <T> T wrap(Object obj, T type) {
+    return (T) Proxy.newProxyInstance(obj.getClass().getClassLoader(),
+        obj.getClass().getInterfaces(), new DebugProxy(obj));
+  }
 }
