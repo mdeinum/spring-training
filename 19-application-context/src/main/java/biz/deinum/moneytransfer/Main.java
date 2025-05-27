@@ -9,6 +9,11 @@ public class Main {
   }
 }
 
+interface HelloWorld {
+
+  void sayHello();
+}
+
 class HelloWorldImpl implements HelloWorld {
 
   @Override
