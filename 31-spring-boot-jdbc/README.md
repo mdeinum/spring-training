@@ -8,7 +8,9 @@ Getting Started
 ---
 First take a look at the `pom.xml` as well as the `biz.deinum.library.JdbcBookRepository` class. This is a plain JDBC implementation of the `BookRepository` interface. It uses the `DataSource` to execute queries and map the `ResultSet` (if needed) using the `mapToBook` method. 
 
-To make this work we first need to have an actual `DataSource`, for this we are going to use the H2 database. 
+To make this work we first need to have an actual `DataSource`, for this we are going to use the H2 database.
+
+**NOTE:** The Project also contains a test case for the `JdbcRepository` ideally after each step you make that green as well, adapting it to the new and improved `JdbcRepository`!
 
 Spring and JDBC
 ---
@@ -93,6 +95,10 @@ Spring Boot and Auto-Configuration
 2. Now re-run the `LibraryApplication` again and it should still work as it did before. However with even less boilerplate code.
     * Notice that the output for starting the datasource is slightly different as it now uses a proper connection pool (Hikari by default)
 
+Spring Boot and Jdbc Testing
+---
+
+
 Spring Boot and Spring Data JDBC
 ---
 1. Replace the `spring-boot-starter-jdbc` dependency with `spring-boot-starter-data-jdbc`
@@ -104,3 +110,5 @@ public interface JdbcBookRepository extends CrudRepository<Book, String>, BookRe
 ```
 4. Finally re-run the application and if all done right it should still work. This is due to Spring Data "generating" the implementation at runtime (it actually uses proxies to accomplish this)
    * The `BookRepository` contains methods with the same signature, or ones understood by Spring Data to create queries based on the method names.
+5. For the test you should `@DataJdbcTest` and autowire the `JdbcBookRepository` into the test case instead of a `DataSource` or `JdbcTemplate`. 
+   * The `@DataJdbcTest`, as the name implies, also bootstraps the needed Spring Data JDBC components needed to create the proper runtime repositories. 
