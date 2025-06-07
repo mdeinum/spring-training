@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring Boot - Library</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
+</head>
+<body>
+
+<div class="ui container">
+    <div th:if="${book} == null">
+        <div class="ui header"><h2 class="ui red">No book with given ISBN has been found!</h2></div>
+    </div>
+    <form class="ui form" th:object="${book}" th:if="${book}" method="POST">
+    <fieldset>
+        <legend>Book Information</legend>
+        <div class="field">
+            <label>Title</label>
+            <input type="text" th:field="*{title}" required/>
+        </div>
+        <div class="field">
+            <label>ISBN</label>
+            <input type="text" th:field="*{isbn}" th:readonly="${!#strings.isEmpty(book.isbn)}" maxlength="13" required/>
+        </div>
+        <div class="field">
+            <label>Authors</label>
+            <textarea th:field="*{authors}" required>
+            </textarea>
+        </div>
+    </fieldset>
+        <button class="ui button primary" type="submit">Save</button>
+        <button class="ui button" type="reset">Reset</button>
+    </form>
+</div>
+
+</body>
+</html>

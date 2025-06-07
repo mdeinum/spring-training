@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring Boot - Library</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
+</head>
+<body>
+
+<div class="ui container">
+    <h1 class="ui header">Library</h1>
+    <table class="ui selectable celled striped table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>ISBN</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="book : ${books}">
+                <td th:text="${book.title}"></td>
+                <td><a th:href="@{/books/{isbn}(isbn = ${book.isbn})}"><span th:text="${book.isbn}"></span></a></td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="/books/" class="">Add Book</a>
+</div>
+
+</body>
+</html>
