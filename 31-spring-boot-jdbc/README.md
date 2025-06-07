@@ -97,15 +97,60 @@ Spring Boot and Auto-Configuration
 
 Spring Boot and Jdbc Testing
 ---
+To test JDBC based application Spring Boot has the nice `@JdbcTest` annotation. This will setup a minimal application context with the needed JDBC infrastructure like a datasource, jdbc template and transaction management. 
 
-
+1. Create a test for the `JdbcBookRepository` and add the `@JdbcTest` annotation
+2. Add a field for the `DataSource` and put `@Autowired` on top of it. 
+3. Add a field for the `JdbcBookRepository`
+4. Create a method to create the `JdbcBookRepository` with the `DataSource` and to initialize the data.
+   ```java
+   @BeforeEach
+   public void setUp() {
+    this.repository = new JdbcBookRepository(dataSource);
+    if (this.repository.findAll().isEmpty()) {
+      BookGenerator.all().forEach(repository::save);
+    }
+   }
+   ```
+   * This will create the repository and initialize the data before each that is being run. 
+   * **TIP:** You could also add `@Import(JdbcBookRepository.class)` to the test to have the repository automatically created and dependency injected. 
+5. Lets create some methods to actually test the repository
+   ```java
+   @Test
+   void shouldRetrieveAllBooks() {
+    var books = repository.findAll();
+    assertEquals(24, books.size());
+   }
+   
+   @Test
+   void shouldFindBookByIsbn() {
+    var isbn = "9780764558313";
+    var books = repository.findByIsbn(isbn);
+    Assertions.assertThat(books)
+        .isNotEmpty()
+        .hasValueSatisfying( (book) -> Assertions.assertThat(book.isbn()).isEqualTo(isbn));
+   }
+   
+   @Test
+   void shouldSaveBook() {
+    var newBook = new Book("123456789test", "Test Book", "Test Author");
+    var cntBefore = repository.findAll().size();
+    this.repository.save(newBook);
+    var cntAfter = repository.findAll().size();
+    Assertions.assertThat(cntAfter).isEqualTo(cntBefore + 1);
+   }
+   ```
+   
 Spring Boot and Spring Data JDBC
 ---
 1. Replace the `spring-boot-starter-jdbc` dependency with `spring-boot-starter-data-jdbc`
 2. Delete the `JdbcBookRepository` class
 3. Add a new interface named `JdbcBookReposity` with the following declaration
+
 ```java
-public interface JdbcBookRepository extends CrudRepository<Book, String>, BookRepository {
+import biz.deinum.library.BookRepository;
+
+public interface JdbcBookRepository extends ListCrudRepository<Book, Long>, BookRepository {
 }
 ```
 4. Finally re-run the application and if all done right it should still work. This is due to Spring Data "generating" the implementation at runtime (it actually uses proxies to accomplish this)

@@ -32,3 +32,12 @@ public ApplicationRunner hello() {
     return (args) -> System.out.println("Hello ING from Spring Boot"); 
 }
 ```
+13. Re-run the application and it should print something to the console.
+14. Run `./mvnw package` or `./gradlew build` and wait for the build to complete. 
+    * there is now an executable jar in the `target` or `build` directory
+    * run it with `java -jar <name-of-jar>` and it should give the same output as in the IDE
+15. If you have docker installed you can try running it as container as well (building will take a while!)
+    * Run `./mvnw spring-boot:build-image` or `./gradlew bootBuildImage`
+    * Wait for the build to have completed
+    * Run the container with `docker run gcr.io/<your-container-name>`
+    * It should now run (and exit) in Docker
