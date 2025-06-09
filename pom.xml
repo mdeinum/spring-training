@@ -29,8 +29,12 @@
 
     <modules>
         <module>00-moneytransfer-shared</module>
+        <module>00-library-shared</module>
         <module>12-java-configuration</module>
         <module>19-application-context</module>
+        <module>21-aop</module>
+        <module>31-spring-boot-jdbc</module>
+        <module>32-spring-boot-web</module>
     </modules>
 
     <dependencyManagement>
@@ -38,6 +42,11 @@
             <dependency>
                 <groupId>biz.deinum</groupId>
                 <artifactId>00-moneytransfer-shared</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>biz.deinum</groupId>
+                <artifactId>00-library-shared</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

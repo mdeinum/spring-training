@@ -87,8 +87,9 @@ public JdbcTemplate jdbcTemplate(DataSource dataSource) {
         return book;
       }
     ```
-    3. Now re-run the `LibraryApplication` and it should still work as it did before. However with a lot less boilerplate code.
-
+3. Now re-run the `LibraryApplication` and it should still work as it did before. However with a lot less boilerplate code.
+4. Try to rewrite the `JdbcBookRepository` into using the `JdbcClient` instead of the `JdbcTemplate`. 
+   
 Spring Boot and Auto-Configuration
 ---
 1. Open the `LibraryApplication` and remove the added `@Bean` methods

@@ -52,6 +52,28 @@ Using path variables
    * Now try to modify to URL manually with an ISBN that doesn't exist
    * Finally take a look at the `library/book.html` page.
 
+Accepting data
+-
+To modify or create a new book we need to have some additional methods on the controller. 1 method for preparing the model and another for persisting the incoming data. 
+
+1. Add a `@GetMapping("/")` on the controller that will put an empty `Book` into the `Model` and renders the `library/book` page.
+   ```java
+   @GetMapping("/")
+   public String newBook(Model model) {
+      model.addAttribute("book", new Book(null, null));
+      return "library/book";
+   }
+   ```
+2. Next we need a method to receive a `Book` and persist it. For this add a method annotated with `@PostMapping`. The method takes a `Book` as the parameter and that parameter is annotated with `@ModelAttribute`. After persisting the new (or updated) book it will redirect to the `/books/{isbn}` url.
+   ```java
+   @PostMapping
+   public String create(@ModelAttribute Book book) {
+      var dbBook = books.create(book);
+      return "redirect:/books/" + dbBook.isbn();
+   }   
+   ```
+3. Re-run the application and see if you can add a new book or edit an existing one.
+
 Exception Handling
 -
 1. Lets improve on the exception handling and lets introduce an `EntityNotFoundException` and handling for it when we don't find the book. 
