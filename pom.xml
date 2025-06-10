@@ -32,9 +32,9 @@
         <module>00-library-shared</module>
         <module>12-java-configuration</module>
         <module>19-application-context</module>
-        <module>21-aop</module>
         <module>31-spring-boot-jdbc</module>
         <module>32-spring-boot-web</module>
+        <module>33-spring-boot-rest-server</module>
     </modules>
 
     <dependencyManagement>
