@@ -194,8 +194,8 @@ This contains the password you can use to login with a user named `user`.
 ```java
   @Bean
   public UserDetailsService userDetailsService() {
-    var user1 = User.withDefaultPasswordEncoder().username("user").password("secret").build();
-    var user2 = User.withDefaultPasswordEncoder().username("admin").password("top-secret").build();
+    var user1 = User.withDefaultPasswordEncoder().username("user").password("secret").roles("USER").build();
+    var user2 = User.withDefaultPasswordEncoder().username("admin").password("top-secret").roles("ADMIN", "USER").build();
     return new InMemoryUserDetailsManager(user1, user2);
   }
 
@@ -214,7 +214,25 @@ This contains the password you can use to login with a user named `user`.
 8. Finally try to re-run the tests they should now fail with a 401 exception meaning that you don't have access.
 9. Add the `spring-security-test` dependency as a `test` scoped dependency (and refresh the project)
 10. Put the `@WithMockUser` annotation on the `LibraryControllerTest` and re-run the tests, they should now succeed. 
-    * The `@WithMockUser` annotatation will register a user for use with Spring Security. It will act as if you just authenticated through the login page and thus you are now able to access the pages. 
+    * The `@WithMockUser` annotatation will register a user for use with Spring Security. It will act as if you just authenticated through the login page and thus you are now able to access the pages.
 
+Switching Servlet Containers
+-
+Spring Boot supports multiple Servlet Containers, Tomcat (the default), Jetty and Undertow. Switching containers is straightforward.
 
+1. Exclude the `spring-boot-starter-tomcat` dependency from `spring-boot-starter-web`
+   ```xml
+   <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <exclusions>
+          <exclusion>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-starter-tomcat</artifactId>
+          </exclusion>
+      </exclusions>
+   </dependency>
+   ```
+2. Add a dependency on either `spring-boot-starter-jetty` or `spring-boot-starter-undertow`
+3. Re-run the application. It should now start with the container of your choice. 
    
