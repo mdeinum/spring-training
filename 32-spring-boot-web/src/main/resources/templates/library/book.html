@@ -11,7 +11,8 @@
     <div th:if="${book} == null">
         <div class="ui header"><h2 class="ui red">No book with given ISBN has been found!</h2></div>
     </div>
-    <form class="ui form" th:object="${book}" th:if="${book}" method="POST">
+    <form class="ui form" th:object="${book}" th:if="${book}" th:action="@{/books}" method="POST">
+        <input type="hidden" th:field="*{id}" />
     <fieldset>
         <legend>Book Information</legend>
         <div class="field">
