@@ -21,6 +21,7 @@ This will add the needed dependencies, Tomcat, Spring Web MVC and Thymeleaf.
 
 2. Next add a class to the project `biz.deinum.library.web.LibraryController`
    * Add the `org.springframework.stereotype.Controller` to the class
+   * Add `@RequestMapping("/books")` to the class next to the `@Controller`.
    * Create a `private` `final` field to hold the `BookService` and create the appropriate constructor for it
 
 3. Next we need a method to react to a GET request on `/books` which prepares the model with a list of books so that we can render them on the webpage named `library/list`.
