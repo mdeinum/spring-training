@@ -43,7 +43,7 @@ Using path variables
    ```java
    @GetMapping("/{isbn}")
    public String show(@PathVariable("isbn") String isbn, Model model) {
-     var book = books.findByIsbn(isbn).ifPresent((b) -> model.addAttribute("book", b));
+     books.findByIsbn(isbn).ifPresent((b) -> model.addAttribute("book", b));
      return "library/book";
    }
    ```
