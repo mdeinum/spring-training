@@ -34,7 +34,6 @@
         <module>19-application-context</module>
         <module>31-spring-boot-jdbc</module>
         <module>32-spring-boot-web</module>
-        <module>33-spring-boot-rest-server</module>
     </modules>
 
     <dependencyManagement>
