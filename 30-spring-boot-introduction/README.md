@@ -39,5 +39,5 @@ public ApplicationRunner hello() {
 15. If you have docker installed you can try running it as container as well (building will take a while!)
     * Run `./mvnw spring-boot:build-image` or `./gradlew bootBuildImage`
     * Wait for the build to have completed
-    * Run the container with `docker run gcr.io/<your-container-name>`
+    * Run the container with `docker run docker.io/<your-container-name>`
     * It should now run (and exit) in Docker
