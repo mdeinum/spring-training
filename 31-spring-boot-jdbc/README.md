@@ -72,7 +72,7 @@ public JdbcTemplate jdbcTemplate(DataSource dataSource) {
       }
     
       @Override
-      public Optional<Book> findById(String isbn) {
+      public Optional<Book> findByIsbn(String isbn) {
         try {
           var dbResult = jdbcTemplate.queryForObject(FIND_BY_ISBN_SQL, (rs, row) -> mapToBook(rs), isbn);
           return Optional.ofNullable(dbResult);
@@ -83,7 +83,7 @@ public JdbcTemplate jdbcTemplate(DataSource dataSource) {
     
       @Override
       public Book save(Book book) {
-        jdbcTemplate.update(SAVE_SQL, book.isbn(), book.title(), book.authors().toArray(new String[0]));
+        jdbcTemplate.update(SAVE_SQL, book.isbn(), book.title(), book.authors());
         return book;
       }
     ```
