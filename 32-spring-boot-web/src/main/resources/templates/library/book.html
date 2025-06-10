@@ -13,22 +13,26 @@
     </div>
     <form class="ui form" th:object="${book}" th:if="${book}" th:action="@{/books}" method="POST">
         <input type="hidden" th:field="*{id}" />
-    <fieldset>
-        <legend>Book Information</legend>
-        <div class="field">
-            <label>Title</label>
-            <input type="text" th:field="*{title}" required/>
-        </div>
-        <div class="field">
-            <label>ISBN</label>
-            <input type="text" th:field="*{isbn}" th:readonly="${!#strings.isEmpty(book.isbn)}" maxlength="13" required/>
-        </div>
-        <div class="field">
-            <label>Authors</label>
-            <textarea th:field="*{authors}" required>
-            </textarea>
-        </div>
-    </fieldset>
+        <fieldset>
+            <legend>Book Information</legend>
+            <div class="ui field" th:classappend="${#fields.hasErrors('title')}? error">
+                <label>Title</label>
+                <input type="text" th:field="*{title}"/>
+                <p th:if="${#fields.hasErrors('title')}" th:errorclass="error" th:errors="*{title}" />
+
+            </div>
+            <div class="ui field" th:classappend="${#fields.hasErrors('isbn')}? error">
+                <label>ISBN</label>
+                <input type="text" th:field="*{isbn}" th:readonly="${!#strings.isEmpty(book.id)}" maxlength="13"/>
+                <p th:if="${#fields.hasErrors('isbn')}" th:errorclass="error" th:errors="*{isbn}" />
+            </div>
+            <div class="ui field" th:classappend="${#fields.hasErrors('authors')}? error">
+                <label>Authors</label>
+                <textarea th:field="*{authors}">
+                </textarea>
+                <p th:if="${#fields.hasErrors('authors')}" th:errorclass="error" th:errors="*{authors}" />
+            </div>
+        </fieldset>
         <button class="ui button primary" type="submit">Save</button>
         <button class="ui button" type="reset">Reset</button>
     </form>
