@@ -62,7 +62,7 @@ To modify or create a new book we need to have an additional method on the contr
    ```
 3. Re-run the application
    ```shell
-   http -v POST http://localhost:8080/api/books isbn=987654321 title="Some Title" authors='["Me"]'
+   http -v POST http://localhost:8080/api/books isbn=987654321 title="Some Title" authors:='["Me"]'
    ```
 4. Instead of directly returning the object we can wrap it in a `ResponseEntity` object, to allow more control over the response. Like adding headers, change code etc. 
 5. Lets modify the create method to return a HTTP Status code of created (201) instead of OK (200).
@@ -97,11 +97,18 @@ Validation and Exception Handling
      @Override
      protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
        HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-       var errors = ex.getAllErrors().stream().collect(Collectors.toMap(this::getKey, this::resolveMessage));
+       var errors = resolveMessage(ex);
        ex.getBody().setProperty("errors", errors);
        return super.handleExceptionInternal(ex, null, headers, status, request);
      }
-   
+     
+     private Map<String, List<String>> resolveMessage(MethodArgumentNotValidException ex) {
+       return  ex.getAllErrors().stream()
+        .collect(
+            Collectors.groupingBy(this::getKey,
+                Collectors.mapping(this::resolveMessage, Collectors.toList())));
+     }
+
      private String getKey(ObjectError error) {
        return (error instanceof FieldError fe) ? fe.getField() : error.getObjectName();
      }
@@ -121,7 +128,7 @@ Validation and Exception Handling
    NotEmpty.book.authors=Book should have at least 1 author
    ``` 
    * This will create messages for the `@NotBlank` on the `title` field of the `Book` class (and more).
-   * You can also add a `messages_NL.properties` and provide Dutch translations (or another ISO_639 language code to provide translations for that specific language.
+   * You can also add a `messages_nl.properties` and provide Dutch translations (or another ISO_639 language code to provide translations for that specific language.
 7. Re-run the application and check the response, it should now give detailed information about the fields that are wrong, using the translations we have put in the `messages.properties`.   
 
 Testing
@@ -151,7 +158,7 @@ For testing we need the `spring-boot-starter-test` dependency which would pull i
        new Book("123456789", "Title 1", "Author 1"),
        new Book("987654321", "Title 2", "Author 2")));
      mockMvc
-       .perform(MockMvcRequestBuilders.get("/books"))
+       .perform(MockMvcRequestBuilders.get("/api/books"))
        .andExpect(MockMvcResultMatchers.status().isOk())
        .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
        .andExpect(MockMvcResultMatchers.jsonPath("$").value(hasSize(2)))
